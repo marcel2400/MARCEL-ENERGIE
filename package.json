@@ -1,0 +1,65 @@
+{
+  "name": "atelier-manager",
+  "productName": "Atelier Manager",
+  "version": "1.0.0",
+  "description": "Logiciel de gestion d'atelier : clients, rendez-vous, interventions, devis, finances",
+  "main": "electron/main.js",
+  "author": "Atelier Manager",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "start": "electron .",
+    "build:communes": "node scripts/build-communes.mjs",
+    "build:icon": "node scripts/build-icon.mjs",
+    "build:renderer": "vite build",
+    "test": "node tests/run.mjs",
+    "dist": "npm run build:communes && npm run build:icon && npm run build:renderer && electron-builder --win",
+    "postinstall": "npm run build:communes"
+  },
+  "devDependencies": {
+    "@etalab/decoupage-administratif": "^4.0.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "lucide-react": "^0.468.0",
+    "png-to-ico": "^3.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^6.0.3"
+  },
+  "build": {
+    "appId": "com.atelier.manager",
+    "productName": "Atelier Manager",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "electron/**/*",
+      "dist-renderer/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Atelier Manager",
+      "language": "1036",
+      "artifactName": "AtelierManager-Setup-${version}.${ext}"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+dist-renderer/
+release/
+*.db
+*.db-wal
+*.db-shm
